@@ -9,34 +9,52 @@ class FlagParser {
 		int flagIndex = 0;
 		while (flagIndex < args.length) {
 			String s = args[flagIndex];
-			if(s.equals("-")) {
+			if (s.equals("-")) {
 				break;
 			}
-			if(s.startsWith("-")) {
+			if (s.startsWith("-")) {
 				char[] tmp = s.toCharArray();
-				for(int i = 1; i < tmp.length; i++) {
+				for (int i = 1; i < tmp.length; i++) {
 					foundFlags.add(tmp[i]);
 				}
-			}
-			else {
+			} else {
 				break;
 			}
 			flagIndex++;
 		}
-		return flagIndex;	
+		return flagIndex;
 	}
 
 	public boolean containsFlag(char c) {
 		return foundFlags.contains(c);
-	}			
+	}
 }
 
 public class Commands {
+
+	private static String inpDir(String[] args) {
+		int subStrIndex = 0;
+		for (int i = 0; i < args.length; i++) {
+			String s2 = args[i];
+			if (s2.equals("/")) {
+				subStrIndex = i;
+				break;
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		for(String val : args) {
+			sb.append(val);
+		}
+		String tmp = sb.substring(subStrIndex, sb.length());
+		return tmp;
+		}
+
 	private static String getCD() {
 		return System.getProperty("user.dir");
 	}
 
 	private static void ls(String[] args) {
+
 		if (args.length == 0) {
 			String cd = getCD();
 			File cdF = new File(cd);
@@ -44,18 +62,27 @@ public class Commands {
 			for (String s : paths) {
 				System.out.println(s);
 			}
-		} else {
-			FlagParser fp = new FlagParser();
-			fp.parse(args);
-			if(fp.containsFlag('l')) {
-				File cdF = new File(getCD());
-				for(File path : cdF.listFiles()) {
-					Date mtime = new Date(path.lastModified());
-					String type = path.isDirectory() ? "d" : "-";
-					System.out.printf("%s %s\t%s\n", type, mtime, path);	
-				}
-			}
 		}
+
+		else {
+		String inpD = inpDir(args);
+		File folder = new File(inpD);
+		File[] listOfFiles = folder.listFiles();
+
+		for (File file : listOfFiles) {
+			if (file.isFile() || file.isDirectory()) {
+				System.out.println(file.getName());
+		}
+	}
+}
+
+		/*
+		 * else { FlagParser fp = new FlagParser(); fp.parse(args); if
+		 * (fp.containsFlag('l')) { File cdF = new File(getCD()); for (File path :
+		 * cdF.listFiles()) { Date mtime = new Date(path.lastModified()); String type =
+		 * path.isDirectory() ? "d" : "-"; System.out.printf("%s %s\t%s\n", type, mtime,
+		 * path); } } }
+		 */
 	}
 
 	public static void main(String[] args) {
@@ -64,10 +91,10 @@ public class Commands {
 			System.exit(1);
 		}
 		String command = args[0];
-		String[] cmdargs = Arrays.copyOfRange(args, 1, args.length);
+		String[] cmdArgs = Arrays.copyOfRange(args, 1, args.length);
 		switch (command) {
 		case "ls":
-			ls(cmdargs);
+			ls(cmdArgs);
 			break;
 		case "cat":
 			break;
