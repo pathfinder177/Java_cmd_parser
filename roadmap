@@ -1,0 +1,15 @@
+- roadmap на ближайщий месяц
+ - команды ls, cat, rm, cp, diff, grep, tail
+ - односвязный список, двусвязный список
+ - java util collections + generics (Treeset, Dictionary Vector etc.)
+ - двоичное дерево поиска
+ - можно игру какую-нибудь, например змейка написать // легкая либа для графики, например SFML
+	https://jsfml.sfmlprojects.org/javadoc/
+ - GUI Swing (например погода или CRUD или bulk rename)
+ - network (sockets), например tcp чат
+ - сервлет + jdbc (CRUD тот же самый)
+ - а вот тут уже спринг
+
+- commands
+ - flags
+ - cat + IO streams
