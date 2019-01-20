@@ -1,5 +1,6 @@
 - roadmap на ближайщий месяц
  - команды ls, cat, rm, cp, diff, grep, tail
+ - csv parser
  - односвязный список, двусвязный список
  - java util collections + generics (Treeset, Dictionary Vector etc.)
  - двоичное дерево поиска
